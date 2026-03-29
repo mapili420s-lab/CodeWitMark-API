@@ -20,7 +20,7 @@ import com.project.codewithmark.service.AppointmentService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/appointments")
+@RequestMapping("/api")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -31,12 +31,12 @@ public class AppointmentController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
+    @GetMapping("/appointments")
     public ResponseEntity<List<AppointmentResponse>> getAllAppointments() {
         return ResponseEntity.ok(appointmentService.getAllAppointments());
     }
 
-    @PostMapping("/createAppointment")
+    @PostMapping("appointment/create")
     public ResponseEntity<AppointmentResponse> createAppointment(
             @Valid @RequestBody AppointmentRequest appointmentRequest, @AuthenticationPrincipal User user) {
 

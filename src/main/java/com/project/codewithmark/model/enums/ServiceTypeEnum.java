@@ -1,5 +1,10 @@
 package com.project.codewithmark.model.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ServiceTypeEnum {
 
     WHOLE_BODY("Relaxation Massage",
@@ -18,31 +23,4 @@ public enum ServiceTypeEnum {
     private final int price;
     private final String code;
 
-    ServiceTypeEnum(String displayName, String description, int duration, int price, String code) {
-        this.displayName = displayName;
-        this.description = description;
-        this.duration = duration;
-        this.price = price;
-        this.code = code;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getCode() {
-        return code;
-    }
 }

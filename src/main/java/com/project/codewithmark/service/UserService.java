@@ -1,6 +1,7 @@
 package com.project.codewithmark.service;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -90,6 +91,8 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
+        LocalDateTime currentDate = LocalDateTime.now();
+        user.setUpdatedAt(currentDate);
         userMapper.updateUserFromRequest(userRequest, user);
 
         return userMapper.toUserResponse(userRepository.save(user));
