@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container header-container">
+        <h1 class="logo">Admin Dashboard</h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- SIDEBAR + MAIN CONTENT -->
+    <div class="main-container container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Users</a></li>
+          <li><a href="#">Therapists</a></li>
+          <li><a href="#">Appointments</a></li>
+          <li><a href="#">Reports</a></li>
+          <li><a href="#">Settings</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dashboard-body">
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+          <div class="card">
+            <h3>Total Users</h3>
+            <p>1,245</p>
+          </div>
+          <div class="card">
+            <h3>Total Therapists</h3>
+            <p>87</p>
+          </div>
+          <div class="card">
+            <h3>Appointments Today</h3>
+            <p>56</p>
+          </div>
+          <div class="card">
+            <h3>Revenue</h3>
+            <p>$12,450</p>
+          </div>
+        </div>
+
+        <!-- Tables Section -->
+        <section class="table-section">
+          <h2>Recent Activities</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Therapist</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>001</td>
+                <td>Jane Doe</td>
+                <td>Dr. Smith</td>
+                <td>Massage</td>
+                <td>2026-03-29</td>
+                <td>Completed</td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td>John Doe</td>
+                <td>Dr. Alice</td>
+                <td>Physiotherapy</td>
+                <td>2026-03-29</td>
+                <td>Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <p>© 2026 TherapyApp. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

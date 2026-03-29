@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service - Massage Booking</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <!-- Simplified Header: Logo + Back Home Only -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <center><h1>Massage Booking</h1></center>
+        </div>
+
+        <nav class="nav">
+          <a th:href="@{/index}" class="back-home-link">← Back to Home</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="terms-wrapper">
+      <div class="terms-box">
+        <center><h1>Terms of Service</h1></center>
+        <p class="last-updated">Last Updated: March 28, 2026</p>
+
+        <section class="terms-content">
+          <h2>1. Acceptance of Terms</h2>
+          <p>
+            By using <strong>Massage Booking</strong>, you agree to these house
+            rules. If you don&apos;t agree, please do not use our services.
+          </p>
+
+          <h2>2. Health & Safety</h2>
+          <p>
+            Your safety is our priority. You must disclose any medical
+            conditions or injuries before your session. Our treatments
+            (Relaxation, Therapeutic, and Foot Reflexology) are for wellness and
+            are not medical advice.
+          </p>
+
+          <h2>3. Cancellation Policy</h2>
+          <p>
+            We value our therapists&apos; time. Please cancel at least
+            <strong>24 hours</strong> in advance. Late cancellations may incur a
+            fee of up to 100% of the service price.
+          </p>
+
+          <h2>4. Professional Conduct</h2>
+          <p>
+            All sessions are strictly professional. Any inappropriate behavior
+            will result in an immediate end to the session and a permanent ban
+            from our platform.
+          </p>
+
+          <h2>5. Privacy</h2>
+          <p>
+            We protect your data according to the Data Privacy Act of 2012. We
+            only use your info to manage your bookings.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <!-- Centered Footer -->
+    <footer class="footer-simple">
+      <p class="copyright">© 2026 Massage Booking. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

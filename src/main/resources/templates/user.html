@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard - Massage Booking</title>
+    <!-- Using a dedicated dashboard.css for better organization -->
+    <link rel="stylesheet" th:href="@{/css/user.css}" />
+  </head>
+  <body class="dashboard-body">
+    <!-- Header: Matches Landing Page Design -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <h1>Massage Booking</h1>
+        </div>
+
+        <nav class="nav">
+          <a href="#new-booking">Book Session</a>
+          <a href="#my-history">My Appointments</a>
+        </nav>
+
+        <div class="auth-buttons">
+          <form style="display: inline">
+            <button type="submit" class="btn-small btn-logout-outline">
+              Log Out
+            </button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-container">
+      <!-- User Greeting -->
+      <div class="welcome-banner">
+        <h1>Hello, <span th:text="${username}">User</span>!</h1>
+        <p>Your journey to relaxation continues here.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Left Column: Booking Form + NEW Service Details -->
+        <section id="new-booking" class="booking-section">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h2>New Appointment</h2>
+              <span class="badge">Step 1: Choose Details</span>
+            </div>
+
+            <!-- Your existing form remains exactly the same -->
+            <form>
+              <div class="form-group">
+                <label for="serviceType">Select Massage Treatment</label>
+                <select
+                  id="serviceType"
+                  name="serviceType"
+                  class="dash-input"
+                  required
+                >
+                  <option
+                    th:each="type : ${types}"
+                    th:value="${type}"
+                    th:text="${type.displayName + ' - ₱' + type.price}"
+                  ></option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="date">Date</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    class="dash-input"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="time">Time</label>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    class="dash-input"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="btn-main dash-btn">
+                Confirm My Booking
+              </button>
+            </form>
+          </div>
+
+          <!-- NEW SECTION: Service Details with Images -->
+          <div class="service-grid">
+            <div class="service-item-card" th:each="type : ${types}">
+              <div
+                class="service-image-container"
+                style="
+                  background-image: url(&quot;ADD_YOUR_IMAGE_URL_HERE&quot;);
+                "
+              ></div>
+              <div class="service-text-content">
+                <h4 th:text="${type.displayName}"></h4>
+                <p th:text="${type.description}"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Recent Status + NEW Wellness Text -->
+        <section id="my-history" class="history-section">
+          <div class="dashboard-card">
+            <h2>Recent Activity</h2>
+            <div class="history-list">
+              <div class="empty-state">
+                <p>You have no upcoming sessions.</p>
+                <small>Book your first massage to see it here!</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- NEW SECTION: Text for User Engagement -->
+          <div class="wellness-info-box">
+            <h3>Preparation Tip</h3>
+            <p>
+              Arrive 10 minutes early to your session to allow your mind to
+              settle and your body to begin its relaxation process.
+            </p>
+          </div>
+
+          <div class="wellness-info-box" style="border-left-color: #888">
+            <h3>Why regular massage?</h3>
+            <p>
+              Routine sessions can help lower cortisol levels and improve your
+              sleep quality over time.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Centered Footer -->
+    <footer class="footer-simple">
+      <div class="container">
+        <p class="copyright">© 2026 Massage Booking. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

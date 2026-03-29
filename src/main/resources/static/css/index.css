@@ -1,0 +1,454 @@
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #444;
+  background-color: #fafafa;
+  line-height: 1.6;
+}
+
+/* Header container */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Keeps it above everything else */
+  background-color: #fff; /* Make sure it's not transparent! */
+  padding: 15px 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Push logo left, auth buttons right */
+}
+
+/* Logo */
+.header .logo span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Disables clicking */
+  cursor: default; /* Changes the mouse back to a normal arrow */
+  text-decoration: none;
+  color: #333;
+}
+
+/* Navigation links */
+.header .nav {
+  display: flex;
+  gap: 20px; /* space between links */
+  margin-left: 50px; /* optional, push nav slightly right from logo */
+}
+
+.header .nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative; /* Added for the underline */
+  transition: color 0.3s ease; /* Added for smooth color change */
+}
+
+.header .nav a:hover,
+.header .nav a:focus {
+  color: #7a7a7a; /* Matches your main theme color */
+  outline: none;
+}
+
+.header .nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #7a7a7a;
+  transition: width 0.3s ease;
+}
+
+.header .nav a:hover::after,
+.header .nav a:focus::after {
+  width: 100%;
+}
+
+.header .logo a:hover {
+  opacity: 0.8;
+}
+
+/* Auth buttons */
+.header .auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header .btn-small {
+  padding: 5px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header .btn-login {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #333;
+}
+
+.header .btn-login:hover {
+  background-color: #333;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.header .btn-signup {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.header .btn-signup:hover {
+  background-color: #555;
+  border-color: #555;
+  transition: all 0.3s ease;
+}
+
+/* Hero Section - Explicitly placing Text Left, Image Right */
+.hero {
+  position: relative;
+  height: calc(100vh - 70px); /* Full screen minus header */
+  min-height: 600px;
+  background-color: #fcfaf6; /* Matches the illustration's warmth */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal halves */
+  align-items: center;
+  padding: 0 10%;
+  overflow: hidden;
+  gap: 40px;
+}
+
+/* Diagonal Shape - Sits behind the text on the left */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e0e0e0;
+  clip-path: polygon(0 0, 60% 0, 0 100%);
+  z-index: 0;
+}
+
+/* Force Image to Column 2 (Right) */
+.hero-image {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  height: 80%;
+}
+
+.hero-image img {
+  max-width: 100%;
+  max-height: 90%;
+  object-fit: contain;
+  -webkit-mask-image: radial-gradient(circle, black 60%, transparent 95%);
+  mask-image: radial-gradient(circle, black 60%, transparent 95%);
+  border-radius: 50px;
+  filter: drop-shadow(0 0 40px rgba(255, 230, 200, 0.4));
+  position: relative;
+  z-index: 5;
+}
+
+/* Force Text/Button to Column 1 (Left) */
+.hero-content {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: left;
+}
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.btn-main {
+  display: inline-block;
+  background-color: #333;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 1px solid #333;
+  margin-top: 1.5rem;
+  font-weight: bold;
+}
+
+.hero .btn-main:hover {
+  background-color: #555;
+  border-color: #555;
+  transition: all 0.3s ease;
+}
+
+/* Services Section (Second Body) */
+.services {
+  min-height: 100vh; /* Takes up the full screen height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers cards vertically */
+  padding: 5rem 10%;
+  text-align: center;
+  background-color: #fcfaf6;
+  box-sizing: border-box;
+  scroll-margin-top: 70px; /* Prevents the sticky header from covering the title */
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.card h3 {
+  margin-top: 0;
+  color: #444;
+}
+.card .price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #666;
+  margin: 10px 0;
+}
+.card .duration {
+  font-style: italic;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* About Section Styles */
+.about {
+  min-height: 100vh; /* Takes up the full screen height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers text vertically */
+  padding: 5rem 10%;
+  background-color: #fcfaf6;
+  text-align: center;
+  box-sizing: border-box;
+  scroll-margin-top: 70px; /* Prevents the sticky header from covering the title */
+}
+
+.about h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* --- Pop-up Modal Styles --- */
+.modal-container {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show the modal when the URL ID matches the div ID */
+.modal-container:target {
+  display: flex;
+}
+
+.modal-box {
+  background: #fdfbf7;
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.modal-container .modal-box .btn-main {
+  width: 100%;
+  border: 1px solid #444;
+}
+
+.modal-container .modal-box .btn-main:hover {
+  width: 100%;
+  border: 1px solid #555;
+  background-color: #555;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: #333;
+  line-height: 1;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-box .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.modal-box input:focus {
+  outline: 1px solid #7a7a7a65;
+}
+
+.form-group .prefix {
+  padding: 8px 8px;
+  /* background-color: #f0f0f0; */
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* --- Modal Footer & Row Styles --- */
+.modal-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.modal-link {
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.modal-link:hover {
+  text-decoration: underline;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Ensure inputs inside a row don't have extra bottom margin */
+.form-row input {
+  margin-bottom: 0;
+}
+
+/* Footer */
+footer {
+  background: #f4f4f4;
+  padding: 3rem 10% 1rem;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.footer-links {
+  margin-bottom: 1.5rem;
+}
+
+.footer-links a {
+  margin: 0 15px;
+  color: #888;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .hero::before {
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 0 50%);
+  }
+  .hero-content {
+    text-align: center;
+    margin-top: 50px;
+  }
+}
+
+/* Responsive: Stack vertically on mobile */
+@media (max-width: 850px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 60px 5%;
+  }
+
+  .hero-content {
+    order: 2; /* Move text below image on mobile */
+    margin: 0 auto;
+  }
+
+  .hero-image {
+    order: 1;
+    margin-bottom: 2rem;
+  }
+
+  .hero::before {
+    clip-path: polygon(0 0, 100% 0, 0 25%);
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Massage Booking</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <!-- Simplified Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <center><h1>Massage Booking</h1></center>
+        </div>
+        <nav class="nav">
+          <a th:href="@{/index}" class="back-home-link">← Back to Home</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="terms-wrapper">
+      <div class="terms-box">
+        <center><h1>Contact Us</h1></center>
+        <p class="last-updated">
+          We&apos;d love to hear from you. Send us a message below.
+        </p>
+
+        <section class="contact-content">
+          <form th:action="@{/contact}" method="post" class="contact-form">
+            <div class="form-group">
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Full Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <textarea
+                name="message"
+                rows="5"
+                placeholder="How can we help you?"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn-main">Send Message</button>
+          </form>
+
+          <div class="contact-info">
+            <hr />
+            <p><strong>Email:</strong> support@massagebooking.ph</p>
+            <p><strong>Phone:</strong> +63 912 345 6789</p>
+            <p><strong>Location:</strong> Dumaguete City, Negros Oriental</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Centered Footer -->
+    <footer class="footer-simple">
+      <p class="copyright">© 2026 Massage Booking. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

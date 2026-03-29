@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Therapist Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/therapist.css}" />
+  </head>
+
+  <body class="dashboard-body">
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <h1>Massage Booking</h1>
+        </div>
+
+        <nav class="nav">
+          <a href="#appointments">Appointments</a>
+        </nav>
+
+        <div class="auth-buttons">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-small btn-logout-outline">
+              Log Out
+            </button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-container">
+      <!-- Greeting -->
+      <div class="welcome-banner">
+        <h1>Welcome, Therapist!</h1>
+        <p>Manage your appointments efficiently.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- LEFT SIDE: APPOINTMENTS -->
+        <section id="appointments" class="booking-section">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h2>Appointment Requests</h2>
+              <span class="badge">Manage Bookings</span>
+            </div>
+
+            <!-- APPOINTMENT LIST -->
+            <div th:each="appt : ${appointments}" class="service-item-card">
+              <div class="service-text-content">
+                <h4 th:text="${appt.clientName}">Client Name</h4>
+                <p>
+                  <strong>Date:</strong> <span th:text="${appt.date}"></span
+                  ><br />
+                  <strong>Time:</strong> <span th:text="${appt.time}"></span
+                  ><br />
+                  <strong>Status:</strong>
+                  <span th:text="${appt.status}"></span>
+                </p>
+
+                <!-- ACTION BUTTONS -->
+                <div style="margin-top: 10px">
+                  <!-- CONFIRM -->
+                  <form style="display: inline">
+                    <button type="button" class="btn-main">Confirm</button>
+                  </form>
+
+                  <!-- CANCEL -->
+                  <form style="display: inline">
+                    <button
+                      type="button"
+                      class="btn-main"
+                      th:if="${appt.status == 'PENDING'}"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div class="empty-state" th:if="${#lists.isEmpty(appointments)}">
+              <p>No appointments yet.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT SIDE: INFO PANEL -->
+        <section class="history-section">
+          <div class="dashboard-card">
+            <h2>Quick Tips</h2>
+
+            <div class="wellness-info-box">
+              <h3>Stay Organized</h3>
+              <p>Confirm appointments early to avoid client confusion.</p>
+            </div>
+
+            <div class="wellness-info-box" style="border-left-color: #888">
+              <h3>Professional Tip</h3>
+              <p>Always prepare your tools 15 minutes before your session.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer-simple">
+      <div class="container">
+        <p>© 2026 Massage Booking. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
