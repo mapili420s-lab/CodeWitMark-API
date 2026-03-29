@@ -50,7 +50,7 @@ public class AppointmentController {
             @Valid @RequestBody AppointmentRequest appointmentRequest, @AuthenticationPrincipal User user) {
 
         if (user == null) {
-            user = userRepository.findById(1L) // Or findByEmail("test@test.com")
+            user = userRepository.findById(1L)
                     .orElseThrow(() -> new RuntimeException("Database is empty! Create a user first."));
         }
         return ResponseEntity.status(HttpStatus.CREATED)

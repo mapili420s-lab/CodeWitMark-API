@@ -45,13 +45,13 @@ public class UserController {
         return ResponseEntity.ok(userService.searchUsers(keyword));
     }
 
-    @PostMapping("/auth/register")
+    @PostMapping("users/auth/register")
     public ResponseEntity<UserResponse> registerUser(
             @Valid @RequestBody UserRequest userRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(userRequest));
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("users/auth/login")
     public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword()));
     }

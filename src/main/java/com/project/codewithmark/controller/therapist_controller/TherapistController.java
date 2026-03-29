@@ -37,13 +37,13 @@ public class TherapistController {
         return ResponseEntity.ok(therapistService.getAllTherapists());
     }
 
-    @PostMapping("/auth/register")
+    @PostMapping("/therapist/auth/register")
     public ResponseEntity<TherapistResponse> registerTherapist(@Valid @RequestBody TherapistRequest therapistRequest) {
         // Logic to register the therapist
         return ResponseEntity.status(200).body(therapistService.registerTherapist(therapistRequest));
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/therapist/auth/login")
     public ResponseEntity<LoginResponse> loginTherapist(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity
                 .ok(therapistService.authenticateTherapist(loginRequest.getEmail(), loginRequest.getPassword()));

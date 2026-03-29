@@ -1,16 +1,16 @@
 package com.project.codewithmark.service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import javax.crypto.SecretKey;
-
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.project.codewithmark.config.security.JwtService;
 import com.project.codewithmark.dto.mapper.TherapistMapper;
 import com.project.codewithmark.dto.therapist_dto.LoginResponse;
 import com.project.codewithmark.dto.therapist_dto.TherapistRequest;
@@ -23,22 +23,22 @@ import com.project.codewithmark.model.enums.TherapistStatus;
 import com.project.codewithmark.repository.AppointmentRepository;
 import com.project.codewithmark.repository.TherapistRepository;
 
-import io.jsonwebtoken.Jwts;
-
 @Service
 public class TherapistService {
         private final TherapistRepository therapistRepository;
         private final AppointmentRepository appointmentRepository;
         private final TherapistMapper therapistMapper;
-        private final SecretKey key;
-        private final long jwtExpirationMs = 86400000; // 1 day
+        private final AuthenticationManager authenticationManager;
+        private final JwtService jwtService;
 
         public TherapistService(TherapistRepository therapistRepository, AppointmentRepository appointmentRepository,
-                        TherapistMapper therapistMapper) {
+                        TherapistMapper therapistMapper, AuthenticationManager authenticationManager,
+                        JwtService jwtService) {
                 this.therapistRepository = therapistRepository;
                 this.appointmentRepository = appointmentRepository;
                 this.therapistMapper = therapistMapper;
-                this.key = Jwts.SIG.HS512.key().build();
+                this.authenticationManager = authenticationManager;
+                this.jwtService = jwtService;
         }
 
         public List<TherapistResponse> getAllTherapists() {
@@ -112,39 +112,30 @@ public class TherapistService {
                 Therapist therapist = therapistMapper.toTherapistEntity(therapistRequest);
                 therapist.setPassword(BCrypt.hashpw(therapistRequest.getPassword(), BCrypt.gensalt()));
                 therapist.setAccountStatus(AccountStatus.ACTIVE);
-                therapist.setRoles(Collections.singleton(Role.THERAPIST));
+                therapist.setRoles(Collections.singleton(Role.ROLE_THERAPIST));
 
                 return therapistMapper.toTherapistResponse(therapistRepository.save(therapist));
         }
 
         public LoginResponse authenticateTherapist(String email, String password) {
+
+                Authentication authentication = authenticationManager
+                                .authenticate(new UsernamePasswordAuthenticationToken(email, password));
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
                 Therapist therapist = therapistRepository.findByEmailIgnoreCase(email)
                                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
-                if (BCrypt.checkpw(password, therapist.getPassword())) {
-                        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
-
-                }
-
-                String token = generateJwtToken(therapist);
+                String jwtToken = jwtService.generateToken(therapist);
 
                 LoginResponse loginResponse = new LoginResponse();
-                loginResponse.setToken(token);
+                loginResponse.setToken(jwtToken);
                 loginResponse.setFirstName(therapist.getFirstName());
                 loginResponse.setEmail(therapist.getEmail());
                 loginResponse.setRoles(therapist.getRoles());
 
                 return loginResponse;
-        }
-
-        public String generateJwtToken(Therapist therapist) {
-                return Jwts.builder()
-                                .subject(therapist.getEmail())
-                                .claim("roles", therapist.getRoles())
-                                .issuedAt(new Date())
-                                .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                                .signWith(key, Jwts.SIG.HS512)
-                                .compact();
         }
 
         // Service method to update therapist by ID

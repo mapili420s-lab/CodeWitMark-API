@@ -2,17 +2,19 @@ package com.project.codewithmark.service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.project.codewithmark.config.security.JwtService;
 import com.project.codewithmark.dto.mapper.UserMapper;
 import com.project.codewithmark.dto.user_dto.LoginResponse;
 import com.project.codewithmark.dto.user_dto.UserRequest;
@@ -22,20 +24,20 @@ import com.project.codewithmark.model.enums.AccountStatus;
 import com.project.codewithmark.model.enums.Role;
 import com.project.codewithmark.repository.UserRepository;
 
-import io.jsonwebtoken.Jwts;
-
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final SecretKey key;
-    private final long jwtExpirationMs = 86400000; // 1 day
     private final UserMapper userMapper;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper,
+            AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.key = Jwts.SIG.HS512.key().build();
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     // Service method to get all users
@@ -78,7 +80,7 @@ public class UserService {
         User user = userMapper.toUserEntity(userRequest);
         user.setPassword(BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt()));
         user.setAccountStatus(AccountStatus.ACTIVE);
-        user.setRoles(Collections.singleton(Role.CLIENT));
+        user.setRoles(Collections.singleton(Role.ROLE_CLIENT));
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
@@ -121,32 +123,23 @@ public class UserService {
 
     // Service method to authenticate user
     public LoginResponse authenticateUser(String email, String password) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(email, password));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         User user = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
-        if (!BCrypt.checkpw(password, user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
-        }
-
-        String token = generateJwtToken(user);
+        String jwtToken = jwtService.generateToken(user);
 
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(token);
+        loginResponse.setToken(jwtToken);
         loginResponse.setUsername(user.getUsername());
         loginResponse.setEmail(user.getEmail());
         loginResponse.setRoles(user.getRoles());
 
         return loginResponse;
-    }
-
-    public String generateJwtToken(User user) {
-        return Jwts.builder()
-                .subject(user.getEmail())
-                .claim("roles", user.getRoles())
-                .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key, Jwts.SIG.HS512)
-                .compact();
     }
 
     public List<UserResponse> searchUsers(String keyword) {

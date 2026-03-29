@@ -2,12 +2,26 @@ package com.project.codewithmark.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.project.codewithmark.config.security.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+        public SecurityConfig(@Lazy JwtAuthenticationFilter jwtAuthenticationFilter) {
+                this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -18,18 +32,32 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 // Authorization rules
                                 .authorizeHttpRequests(auth -> auth
-                                                // Landing page and static resources accessible without login
-                                                .requestMatchers("/api/v1/auth/**").permitAll()
-
-                                                // Open API endpoints (like user registration)
+                                                .requestMatchers("/api/v1/users/auth/**").permitAll()
+                                                .requestMatchers("/api/v1/therapist/auth/**").permitAll()
                                                 .requestMatchers("/api/v1/users/**").permitAll()
-
-                                                // Everything else requires authentication
+                                                .requestMatchers("/api/v1/therapist/**").permitAll()
+                                                .requestMatchers("/api/v1/service_type/**").permitAll()
+                                                .requestMatchers("/api/v1/appointments/**").authenticated()
                                                 .anyRequest().authenticated())
-                                // Enable form login for browser UI
+                                // Form login disabled
                                 .formLogin(form -> form.disable())
                                 .httpBasic(basic -> basic.disable());
 
+                // Add JWT filter before UsernamePasswordAuthenticationFilter
+                http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
                 return http.build();
         }
+
+        // Password encoder for Spring Security
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+                return config.getAuthenticationManager();
+        }
+
 }
