@@ -32,6 +32,15 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 // Authorization rules
                                 .authorizeHttpRequests(auth -> auth
+                                                // Swagger access (IMPORTANT)
+                                                .requestMatchers(
+                                                                "/swagger-ui/**",
+                                                                "/swagger-ui.html",
+                                                                "/v3/api-docs/**",
+                                                                "/v3/api-docs",
+                                                                "/webjars/**")
+                                                .permitAll()
+                                                
                                                 .requestMatchers("/api/v1/users/auth/**").permitAll()
                                                 .requestMatchers("/api/v1/therapist/auth/**").permitAll()
                                                 .requestMatchers("/api/v1/users/**").permitAll()
