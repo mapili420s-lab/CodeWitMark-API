@@ -112,6 +112,7 @@ public class TherapistService {
                 Therapist therapist = therapistMapper.toTherapistEntity(therapistRequest);
                 therapist.setPassword(BCrypt.hashpw(therapistRequest.getPassword(), BCrypt.gensalt()));
                 therapist.setAccountStatus(AccountStatus.ACTIVE);
+                therapist.setStatus(TherapistStatus.AVAILABLE);
                 therapist.setRoles(Collections.singleton(Role.ROLE_THERAPIST));
 
                 return therapistMapper.toTherapistResponse(therapistRepository.save(therapist));
