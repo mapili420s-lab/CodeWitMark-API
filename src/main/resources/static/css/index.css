@@ -10,7 +10,6 @@ body {
   background-color: #fafafa;
   line-height: 1.6;
 }
-
 /* Header container */
 .header {
   position: sticky;
@@ -20,13 +19,11 @@ body {
   padding: 15px 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 .header .container {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Push logo left, auth buttons right */
 }
-
 /* Logo */
 .header .logo span {
   font-size: 1.5rem;
@@ -36,14 +33,12 @@ body {
   text-decoration: none;
   color: #333;
 }
-
 /* Navigation links */
 .header .nav {
   display: flex;
   gap: 20px; /* space between links */
   margin-left: 50px; /* optional, push nav slightly right from logo */
 }
-
 .header .nav a {
   text-decoration: none;
   color: #333;
@@ -51,13 +46,11 @@ body {
   position: relative; /* Added for the underline */
   transition: color 0.3s ease; /* Added for smooth color change */
 }
-
 .header .nav a:hover,
 .header .nav a:focus {
   color: #7a7a7a; /* Matches your main theme color */
   outline: none;
 }
-
 .header .nav a::after {
   content: "";
   position: absolute;
@@ -68,54 +61,44 @@ body {
   background-color: #7a7a7a;
   transition: width 0.3s ease;
 }
-
 .header .nav a:hover::after,
 .header .nav a:focus::after {
   width: 100%;
 }
-
 .header .logo a:hover {
   opacity: 0.8;
 }
-
 /* Auth buttons */
 .header .auth-buttons {
   display: flex;
   gap: 10px;
 }
-
 .header .btn-small {
   padding: 5px 12px;
   border-radius: 4px;
   text-decoration: none;
   font-weight: 500;
 }
-
 .header .btn-login {
   background-color: transparent;
   color: #333;
   border: 1px solid #333;
 }
-
 .header .btn-login:hover {
   background-color: #333;
   color: #fff;
   transition: all 0.3s ease;
 }
-
 .header .btn-signup {
   background-color: #333;
   color: #fff;
   border: 1px solid #333;
 }
-
 .header .btn-signup:hover {
   background-color: #555;
   border-color: #555;
   transition: all 0.3s ease;
 }
-
-/* Hero Section - Explicitly placing Text Left, Image Right */
 .hero {
   position: relative;
   height: calc(100vh - 70px); /* Full screen minus header */
@@ -128,8 +111,6 @@ body {
   overflow: hidden;
   gap: 40px;
 }
-
-/* Diagonal Shape - Sits behind the text on the left */
 .hero::before {
   content: "";
   position: absolute;
@@ -141,8 +122,6 @@ body {
   clip-path: polygon(0 0, 60% 0, 0 100%);
   z-index: 0;
 }
-
-/* Force Image to Column 2 (Right) */
 .hero-image {
   grid-column: 2;
   grid-row: 1;
@@ -152,7 +131,6 @@ body {
   justify-content: center;
   height: 80%;
 }
-
 .hero-image img {
   max-width: 100%;
   max-height: 90%;
@@ -164,8 +142,6 @@ body {
   position: relative;
   z-index: 5;
 }
-
-/* Force Text/Button to Column 1 (Left) */
 .hero-content {
   grid-column: 1;
   grid-row: 1;
@@ -179,7 +155,6 @@ body {
   margin-bottom: 1rem;
   color: #333;
 }
-
 .btn-main {
   display: inline-block;
   background-color: #333;
@@ -191,33 +166,28 @@ body {
   margin-top: 1.5rem;
   font-weight: bold;
 }
-
 .hero .btn-main:hover {
   background-color: #555;
   border-color: #555;
   transition: all 0.3s ease;
 }
-
-/* Services Section (Second Body) */
 .services {
-  min-height: 100vh; /* Takes up the full screen height */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centers cards vertically */
+  justify-content: center; 
   padding: 5rem 10%;
   text-align: center;
   background-color: #fcfaf6;
   box-sizing: border-box;
-  scroll-margin-top: 70px; /* Prevents the sticky header from covering the title */
+  scroll-margin-top: 70px; 
 }
-
 .service-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
 }
-
 .card {
   background: white;
   padding: 2rem;
@@ -226,7 +196,6 @@ body {
   border: 1px solid #eee;
   transition: transform 0.2s;
 }
-
 .card:hover {
   transform: translateY(-5px);
 }
@@ -245,26 +214,22 @@ body {
   color: #888;
   font-size: 0.9rem;
 }
-
-/* About Section Styles */
 .about {
-  min-height: 100vh; /* Takes up the full screen height */
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centers text vertically */
+  justify-content: center; 
   padding: 5rem 10%;
   background-color: #fcfaf6;
   text-align: center;
   box-sizing: border-box;
-  scroll-margin-top: 70px; /* Prevents the sticky header from covering the title */
+  scroll-margin-top: 70px; 
 }
-
 .about h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #333;
 }
-
 .about-content {
   max-width: 800px;
   margin: 0 auto;
@@ -272,14 +237,11 @@ body {
   color: #555;
   line-height: 1.8;
 }
-
 .about-content p {
   margin-bottom: 1.5rem;
 }
-
-/* --- Pop-up Modal Styles --- */
 .modal-container {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -290,12 +252,9 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-/* Show the modal when the URL ID matches the div ID */
 .modal-container:target {
   display: flex;
 }
-
 .modal-box {
   background: #fdfbf7;
   padding: 40px;
@@ -309,7 +268,6 @@ body {
   width: 100%;
   border: 1px solid #444;
 }
-
 .modal-container .modal-box .btn-main:hover {
   width: 100%;
   border: 1px solid #555;
@@ -326,7 +284,6 @@ body {
   color: #333;
   line-height: 1;
 }
-
 .modal-box h2 {
   margin-top: 0;
   margin-bottom: 20px;
@@ -338,7 +295,6 @@ body {
   display: flex;
   gap: 10px;
 }
-
 .modal-box input {
   width: 100%;
   padding: 12px;
@@ -346,11 +302,9 @@ body {
   border-radius: 4px;
   font-size: 1rem;
 }
-
 .modal-box input:focus {
   outline: 1px solid #7a7a7a65;
 }
-
 .form-group .prefix {
   padding: 8px 8px;
   /* background-color: #f0f0f0; */
@@ -360,7 +314,6 @@ body {
   font-size: 16px;
   font-weight: bold;
 }
-
 /* --- Modal Footer & Row Styles --- */
 .modal-footer {
   margin-top: 20px;
@@ -368,28 +321,23 @@ body {
   font-size: 0.9rem;
   color: #666;
 }
-
 .modal-link {
   color: #333;
   font-weight: bold;
   text-decoration: none;
 }
-
 .modal-link:hover {
   text-decoration: underline;
 }
-
 .form-row {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
-
 /* Ensure inputs inside a row don't have extra bottom margin */
 .form-row input {
   margin-bottom: 0;
 }
-
 /* Footer */
 footer {
   background: #f4f4f4;
@@ -397,23 +345,19 @@ footer {
   text-align: center;
   border-top: 1px solid #eee;
 }
-
 .footer-links {
   margin-bottom: 1.5rem;
 }
-
 .footer-links a {
   margin: 0 15px;
   color: #888;
   text-decoration: none;
   font-size: 0.9rem;
 }
-
 .copyright {
   font-size: 0.8rem;
   color: #aaa;
 }
-
 /* Responsive */
 @media (max-width: 768px) {
   header {
@@ -429,7 +373,6 @@ footer {
     margin-top: 50px;
   }
 }
-
 /* Responsive: Stack vertically on mobile */
 @media (max-width: 850px) {
   .hero {
@@ -437,17 +380,14 @@ footer {
     text-align: center;
     padding: 60px 5%;
   }
-
   .hero-content {
     order: 2; /* Move text below image on mobile */
     margin: 0 auto;
   }
-
   .hero-image {
     order: 1;
     margin-bottom: 2rem;
   }
-
   .hero::before {
     clip-path: polygon(0 0, 100% 0, 0 25%);
   }
